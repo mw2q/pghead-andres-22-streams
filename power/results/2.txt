@@ -1,0 +1,152 @@
+BEGIN;
+BEGIN
+select
+	s_acctbal,
+	s_name,
+	n_name,
+	p_partkey,
+	p_mfgr,
+	s_address,
+	s_phone,
+	s_comment
+from
+	part,
+	supplier,
+	partsupp,
+	nation,
+	region
+where
+	p_partkey = ps_partkey
+	and s_suppkey = ps_suppkey
+	and p_size = 32
+	and p_type like '%STEEL'
+	and s_nationkey = n_nationkey
+	and n_regionkey = r_regionkey
+	and r_name = 'AFRICA'
+	and ps_supplycost = (
+		select
+			min(ps_supplycost)
+		from
+			partsupp,
+			supplier,
+			nation,
+			region
+		where
+			p_partkey = ps_partkey
+			and s_suppkey = ps_suppkey
+			and s_nationkey = n_nationkey
+			and n_regionkey = r_regionkey
+			and r_name = 'AFRICA'
+	)
+order by
+	s_acctbal desc,
+	n_name,
+	s_name,
+	p_partkey
+LIMIT 100;
+ s_acctbal |          s_name           |          n_name           | p_partkey |          p_mfgr           |                s_address                 |     s_phone     |                                              s_comment                                               
+-----------+---------------------------+---------------------------+-----------+---------------------------+------------------------------------------+-----------------+------------------------------------------------------------------------------------------------------
+   9998.88 | Supplier#000067110        | ALGERIA                   |    792088 | Manufacturer#4            | LCezSWsDk4yf1b6NKhOSmvoUV                | 10-305-873-4840 | t the pending, final foxes wake blithely unusual accounts; special accounts alo
+   9989.77 | Supplier#000086226        | MOZAMBIQUE                |    761218 | Manufacturer#5            | HxaMUKpi3uHXwlMKDw,8OtCjuFOZwMAU         | 26-245-102-5044 | es. ironic, pending packages among the unusual dependencies haggle requ
+   9987.73 | Supplier#000013186        | ALGERIA                   |    613185 | Manufacturer#1            | JUt9l87vbEMj5n7nM5OZg9zLqnXgt3wXmcVB     | 10-716-279-8103 | ly bold accounts. carefully ironic courts wake care
+   9982.85 | Supplier#000090106        | ETHIOPIA                  |    315096 | Manufacturer#1            | ifYxblkRo2qoiwbR 3Wb5                    | 15-207-423-7347 | ide of the bold platelets. fluff
+   9978.64 | Supplier#000052998        | MOROCCO                   |    952997 | Manufacturer#1            | gDAgeqoE9Bxr5iKxhVfRPpbgceU              | 25-585-913-5495 | ickly regular accounts was furiously quietly regular asymptotes. blithely express accounts w
+   9974.63 | Supplier#000092851        | MOROCCO                   |   1567835 | Manufacturer#3            | ifGl8NdTdP0FDADGNFnO0tuBcgZd7cj          | 25-990-810-6757 | arefully blithely special courts. regular packages cajole furiously alongside of the busily 
+   9970.72 | Supplier#000061728        | KENYA                     |    686709 | Manufacturer#2            | FByqupniQbeWVEmq1iMqu6                   | 24-715-872-8435 | nusual packages are idly. escapades cajole blithely! qu
+   9966.48 | Supplier#000057675        | KENYA                     |    207670 | Manufacturer#1            | pqhZPD4EedWTU30v7fn15qN                  | 24-616-821-9881 |  the special, ironic accounts! furiously final ideas boost slyly about the final, final pinto bean
+   9960.55 | Supplier#000079832        | KENYA                     |   1729797 | Manufacturer#5            | ese OJ3icJw0eqrs8                        | 24-964-405-9207 | ts inside the even, even warthogs haggle carefully among the regular courts. ruthless packa
+   9960.13 | Supplier#000095235        | MOROCCO                   |    820210 | Manufacturer#1            | 6TYA8HVhsFi98ADWAXYIZ3aOBNnln48hmIbBwEN  | 25-431-962-8858 | hely against the slyly ironic dep
+   9959.04 | Supplier#000089002        | ALGERIA                   |    638989 | Manufacturer#4            | 6ZQKs2e26ontMLoeKhcLOx46D3C6f            | 10-913-470-8541 | ly according to the fluffily even accounts. special, pending depo
+   9955.02 | Supplier#000017094        | MOZAMBIQUE                |   1242057 | Manufacturer#3            | 784wAVKHr7jPm                            | 26-466-257-9373 | ful requests. blithely final packages use. carefully
+   9952.33 | Supplier#000025262        | MOROCCO                   |   1925261 | Manufacturer#4            | Z8pARuZ1Il                               | 25-338-890-5189 |  unusual deposits above the slyly pending theo
+   9952.16 | Supplier#000092274        | ETHIOPIA                  |    792273 | Manufacturer#4            | zlBj0FnyTqtaM9Q                          | 15-282-366-3649 | ect slyly carefully special deposits. carefully regular dependencies against the carefully bold 
+   9950.11 | Supplier#000050711        | MOROCCO                   |   1275674 | Manufacturer#1            | 51PH 3g6gPrDt                            | 25-197-657-2547 | ss the deposits. unusual ideas after the final requests cajole blithely alo
+   9949.69 | Supplier#000054553        | ALGERIA                   |    529547 | Manufacturer#4            | XOnyRaZ7rXtEhaSzHswG,IOfmKAKmhYUsGGclPO  | 10-642-883-8474 | y. bold theodolites haggle above the final ideas! furiously un
+   9949.69 | Supplier#000054553        | ALGERIA                   |   1379513 | Manufacturer#5            | XOnyRaZ7rXtEhaSzHswG,IOfmKAKmhYUsGGclPO  | 10-642-883-8474 | y. bold theodolites haggle above the final ideas! furiously un
+   9949.02 | Supplier#000087245        | KENYA                     |    412232 | Manufacturer#4            | 2HAjS5HbeU97 vWg3f4uQlrcF  0wAAO0RT CBd  | 24-409-202-4637 |  accounts after the requests nag fluffily against the furiously regular deposits. 
+   9949.02 | Supplier#000087245        | KENYA                     |   1712193 | Manufacturer#4            | 2HAjS5HbeU97 vWg3f4uQlrcF  0wAAO0RT CBd  | 24-409-202-4637 |  accounts after the requests nag fluffily against the furiously regular deposits. 
+   9945.69 | Supplier#000008146        | ETHIOPIA                  |    383142 | Manufacturer#1            | P4Lt0mMYW4ffCqv                          | 15-526-243-1532 | uriously ironic theodolites haggle blithely ironic deposits. even Tiresias doubt carefully. th
+   9945.69 | Supplier#000008146        | ETHIOPIA                  |    408145 | Manufacturer#4            | P4Lt0mMYW4ffCqv                          | 15-526-243-1532 | uriously ironic theodolites haggle blithely ironic deposits. even Tiresias doubt carefully. th
+   9942.91 | Supplier#000040734        | KENYA                     |    915724 | Manufacturer#4            | Lxh1AB9OxMuXr,yNJz312                    | 24-375-894-1104 |  quickly silent packages play always a
+   9939.54 | Supplier#000096556        | KENYA                     |    321546 | Manufacturer#4            | obR0Ahk j1KW3BUwBWiVPhWx1eGZlPDh7ZSC     | 24-342-579-7677 | , special asymptotes. enticing accounts wake. carefully ev
+   9938.29 | Supplier#000021933        | KENYA                     |     96932 | Manufacturer#5            | am6s9SDw6NIz7AbUiKz0iM5p                 | 24-824-372-7787 | oxes. carefully even pains use slyly. even grouches wake court
+   9934.88 | Supplier#000085655        | ALGERIA                   |     60654 | Manufacturer#3            | I,kHMMxyYKZEgR9pBUf8 Ucv7IAs             | 10-106-924-7242 | ts use. blithely final theodolites sleep slyly sly, even packages. quickly special pinto 
+   9934.76 | Supplier#000071142        | MOROCCO                   |   1096111 | Manufacturer#3            | b4qmTJhWm4o9                             | 25-310-453-4084 | ithely bold orbits sleep fluffily about the even accounts. pinto b
+   9934.76 | Supplier#000071142        | MOROCCO                   |   1646125 | Manufacturer#2            | b4qmTJhWm4o9                             | 25-310-453-4084 | ithely bold orbits sleep fluffily about the even accounts. pinto b
+    9934.5 | Supplier#000069099        | KENYA                     |   1644082 | Manufacturer#5            | 9zcGfmIuHoNrkP8YN7yzNRkIlqFV,MQMj68k     | 24-982-466-7084 | ully dogged frets wake regular packages. special deposits wake about the regularly pending idea
+    9932.3 | Supplier#000098275        | ETHIOPIA                  |     48274 | Manufacturer#2            | Kb20M 1lY,Skds2eUuKYV64q0TBKHXn          | 15-242-221-5003 | ep ironic, regular theodolites. blithe accounts affix silently slyly express ideas. even 
+   9931.03 | Supplier#000014328        | MOROCCO                   |    789320 | Manufacturer#1            | VxQYJ6woPLxDjecU7O51G8rPpT512m2vHHGhp6   | 25-106-589-4727 |  the warhorses. quickly final foxes use packages. special, bold gifts wake blithely slyly bl
+   9929.72 | Supplier#000025135        | MOROCCO                   |   1075114 | Manufacturer#3            | CDzuS,4WvULG                             | 25-144-799-6559 | ould have to affix. furiously final accounts wake carefully. furiously even accounts after the blith
+   9929.67 | Supplier#000060573        | MOZAMBIQUE                |   1910534 | Manufacturer#1            | vqVt4M8,mb cju1F163XwPs                  | 26-932-989-5981 | ily above the quickly final requests. furious
+   9927.51 | Supplier#000013429        | ALGERIA                   |     13428 | Manufacturer#1            | ,P9wWS,RPTPQWm1TBHXIOjiBugJ9ioi          | 10-633-217-5141 | posits against the furiously final accounts cajole carefully even ac
+   9927.23 | Supplier#000098618        | ALGERIA                   |   1023587 | Manufacturer#5            | 9,LuwQjkiKItwjOpVnN7C4zA                 | 10-487-128-2007 | luffily even instructions nag carefully after the final
+   9925.05 | Supplier#000021788        | ALGERIA                   |     21787 | Manufacturer#3            | P SB5UrycyBo9CaD                         | 10-463-431-9598 | ecial asymptotes nag slyly quietly special patterns. furiously un
+   9923.19 | Supplier#000076449        | ALGERIA                   |    601430 | Manufacturer#4            | n  fyGj5cC0bJ5m1n9wTfTVU1LG3lhwFkVLzq    | 10-996-702-6944 | its. requests wake across
+   9922.43 | Supplier#000012213        | MOZAMBIQUE                |    887204 | Manufacturer#3            | c32eDeggXXh6jgOVXf7Yr                    | 26-389-912-3207 | uses. regular deposits sleep after the furious
+      9922 | Supplier#000046588        | KENYA                     |    596577 | Manufacturer#2            | hZUCInUbEa p2O5f23WtWCXpYEMn             | 24-796-791-1145 |  enticing accounts wake furiously regular, silent instructions. bold pa
+   9921.35 | Supplier#000076160        | KENYA                     |   1751142 | Manufacturer#2            | HP1qj2LKkox8G7LyM8gKnQ6LR3oBij7w         | 24-753-704-7336 | totes haggle stealthily according to the f
+      9920 | Supplier#000027369        | ETHIOPIA                  |    427368 | Manufacturer#4            | oLfspesAI87K                             | 15-304-864-4664 | es are along the quickly final deposits. blithely even instructions
+      9920 | Supplier#000027369        | ETHIOPIA                  |   1977330 | Manufacturer#4            | oLfspesAI87K                             | 15-304-864-4664 | es are along the quickly final deposits. blithely even instructions
+   9919.75 | Supplier#000088872        | ALGERIA                   |    413859 | Manufacturer#5            | 2hBsPe9052wXNDKEiG                       | 10-910-335-3317 | ffily against the blithely even asympt
+   9919.75 | Supplier#000088872        | ALGERIA                   |    713850 | Manufacturer#5            | 2hBsPe9052wXNDKEiG                       | 10-910-335-3317 | ffily against the blithely even asympt
+   9918.05 | Supplier#000069234        | MOROCCO                   |   1019213 | Manufacturer#3            | 33wKhXEZ8h8DOYcb                         | 25-801-796-8358 | regular requests boost along the final instructions. blithely pending instructions ab
+   9916.96 | Supplier#000048110        | ALGERIA                   |    798095 | Manufacturer#3            | a kbrzNx5VdUwH175c                       | 10-972-687-6611 | le carefully across the regular, ironic dependencies. pearls cajole. slyl
+   9916.72 | Supplier#000013830        | ETHIOPIA                  |   1663797 | Manufacturer#5            | bL0iTT8F323GZJeMWocj                     | 15-518-608-3909 | jole among the carefully brave asymptotes. 
+   9913.16 | Supplier#000053511        | KENYA                     |     78510 | Manufacturer#5            | vcTd,,rkwleB,mq1mancoOntm6bM             | 24-900-341-8199 | r depths sleep according to 
+   9912.82 | Supplier#000092241        | MOROCCO                   |   1792240 | Manufacturer#1            | 4mgVtdGeqIvUL33TZ5uhn1,PQaFY             | 25-392-189-2998 | r theodolites. idly bold acc
+   9903.48 | Supplier#000073140        | ETHIOPIA                  |    598124 | Manufacturer#5            | NQ1WDQFfwAEa                             | 15-650-318-7270 | bold packages affix; regularly regular deposits doze sl
+    9902.9 | Supplier#000049816        | KENYA                     |    924806 | Manufacturer#2            | izadhZGQdoblHdqUFDP1Trj ABlVGwWIW G      | 24-310-122-4880 | notornis wake carefully. furiously pending theodolites wake slyly after the permanently regular req
+   9902.83 | Supplier#000012012        | MOZAMBIQUE                |     37011 | Manufacturer#1            | tAVvnAf0iZ2VVYEJNqT3                     | 26-871-771-2592 | quickly slow packages alongside of th
+   9902.83 | Supplier#000012012        | MOZAMBIQUE                |    436999 | Manufacturer#4            | tAVvnAf0iZ2VVYEJNqT3                     | 26-871-771-2592 | quickly slow packages alongside of th
+   9901.68 | Supplier#000092232        | KENYA                     |    517216 | Manufacturer#3            | EQxvyayaK5hQbS p8e4o08VqXFLa             | 24-866-169-1752 | e permanently. final, ironic instructions integrate requests. quickly final e
+   9901.64 | Supplier#000076437        | ALGERIA                   |   1451422 | Manufacturer#4            | AbwZCZHYPeBADSRsbD3cdTfHcnMH             | 10-341-535-6223 | are furiously regular, even theodolites.
+   9896.37 | Supplier#000045886        | ALGERIA                   |   1545885 | Manufacturer#1            | 2bJEg5phsXLDgr H                         | 10-794-812-9991 |  the blithely final Tiresias nod blithely sly r
+   9895.73 | Supplier#000080247        | ALGERIA                   |   1980246 | Manufacturer#4            | Yr62gMdlDn3HgrwL3sWm0ur5jzNvLRoNiHU      | 10-629-961-2798 | ously express instructions cajole slyl
+    9893.3 | Supplier#000074133        | KENYA                     |    324126 | Manufacturer#4            | 6sETCcVfad1YSnZZaRBKaZU                  | 24-338-747-8912 | t ironic requests. unusual, u
+   9891.83 | Supplier#000070557        | MOROCCO                   |   1870556 | Manufacturer#2            | TTFgk6tVJAu                              | 25-726-653-7994 | cording to the packages. carefully 
+   9891.75 | Supplier#000077660        | ETHIOPIA                  |     77659 | Manufacturer#3            | K0xxEf55 w                               | 15-753-886-7734 | posits. fluffily pending instructions sleep. fin
+   9891.48 | Supplier#000070463        | ETHIOPIA                  |    920444 | Manufacturer#3            | D nRv7,fDZt46ZWqjWG                      | 15-489-629-3067 | ly requests along the express, ironi
+   9889.22 | Supplier#000016107        | ETHIOPIA                  |    166104 | Manufacturer#4            | Ymi9VSt7PsleMkVaxEa 0g1tDpXdOs21IieXaB   | 15-680-714-9145 |  furiously. bold patterns cajole blithe
+   9879.13 | Supplier#000004490        | MOROCCO                   |   1729438 | Manufacturer#3            | yV,6nQyyVJgEC5fq40JcEu3k4yBxtJL          | 25-506-743-6374 | he regular foxes. blithely even requests use furiously. even, bold frays
+   9878.29 | Supplier#000078001        | ETHIOPIA                  |   1027980 | Manufacturer#1            | HoLcMaEwRcSkkRZSMKjFJNbDCKoML            | 15-920-317-9052 |  dependencies. never unusual pinto beans cajole blithel
+   9874.63 | Supplier#000099757        | ALGERIA                   |   1574741 | Manufacturer#3            | W20agOMYhNXGvRbAJ9Wj8sASijsW83r10NtYfNz  | 10-659-887-4502 | es. carefully special theodolites are always along the furi
+   9873.85 | Supplier#000024374        | ALGERIA                   |   1149340 | Manufacturer#4            | MsyRz8eKg7bvywX                          | 10-800-143-4267 | ic ideas haggle. slyly regular requests sl
+   9872.62 | Supplier#000013751        | ALGERIA                   |    938723 | Manufacturer#5            | bRHEIMp30y1iw                            | 10-413-751-3960 | ckages after the regular, unusual platelets are blithely after the unusual asymp
+   9871.51 | Supplier#000048913        | MOROCCO                   |     48912 | Manufacturer#1            | hioqxkHxvmKvT8MSdjHjk8p                  | 25-576-388-1605 | pending platelets should have to sleep furiously ironic deposits. furiously final
+   9861.38 | Supplier#000074307        | MOROCCO                   |    524296 | Manufacturer#5            | 0QPsd0D6QcJGJudplpQ0Fm                   | 25-779-867-3646 | nwind furiously furiously unusual ideas. bravely special foxes across the blithely 
+   9861.38 | Supplier#000074307        | MOROCCO                   |   1474306 | Manufacturer#5            | 0QPsd0D6QcJGJudplpQ0Fm                   | 25-779-867-3646 | nwind furiously furiously unusual ideas. bravely special foxes across the blithely 
+   9855.06 | Supplier#000048663        | KENYA                     |   1448662 | Manufacturer#3            | lB1JwDkSAm                               | 24-517-117-8261 |  the carefully special pinto beans haggle c
+   9852.43 | Supplier#000088555        | ETHIOPIA                  |    638542 | Manufacturer#3            | 95HRiTxTMnkz4PHyJinuqqRRR6fgb            | 15-969-608-1740 | kly even deposits affix against the ca
+   9852.36 | Supplier#000043723        | ALGERIA                   |    218720 | Manufacturer#1            | aeN6fvXvJZ,F27AWbz                       | 10-116-286-5670 |  packages cajole furiously about the carefully ironic requ
+    9847.1 | Supplier#000083903        | MOZAMBIQUE                |   1758885 | Manufacturer#2            | vXtaCEVOYIHXEc35aZrLQ                    | 26-299-853-1069 |  deposits. blithely silent dolphins wake blith
+   9844.35 | Supplier#000087480        | MOZAMBIQUE                |    637467 | Manufacturer#3            | q8LkotiJGM0tI8hSapo6kWLUKSsAvFq3Yzc1P5R  | 26-269-632-8717 | yly ironic instructions hinder furiously final, final f
+   9844.35 | Supplier#000087480        | MOZAMBIQUE                |    662473 | Manufacturer#2            | q8LkotiJGM0tI8hSapo6kWLUKSsAvFq3Yzc1P5R  | 26-269-632-8717 | yly ironic instructions hinder furiously final, final f
+   9838.16 | Supplier#000003348        | MOROCCO                   |   1278335 | Manufacturer#2            | ngwfUSRAvm4dBe2JmJi7picb6CHK7            | 25-267-444-9017 | lar packages use blithely ironic accounts. pinto beans wake quickly final, ironic instructions
+   9837.37 | Supplier#000011153        | MOROCCO                   |    211152 | Manufacturer#1            |  zu9X3WcSss5zy K3D                       | 25-434-239-1361 | bout the quickly bold instructions are blithely 
+   9836.53 | Supplier#000005077        | ALGERIA                   |   1455048 | Manufacturer#4            | AoD06AAcIfuPu4B6YzUyFOYgVyb6             | 10-852-519-9875 | ven accounts. quickly express deposits was blithe
+   9833.64 | Supplier#000018585        | ALGERIA                   |    843560 | Manufacturer#2            | sIP2UO58wkRVDH03U                        | 10-755-145-9724 | gged, final excuses. careful
+   9830.92 | Supplier#000022500        | MOROCCO                   |   1047469 | Manufacturer#5            | Il8mWAfUCLIqCEXgljJkZ3LmbNywC3           | 25-343-173-3913 | gle carefully regular platelets. slyly special theodolites
+   9824.93 | Supplier#000096848        | ALGERIA                   |   1721796 | Manufacturer#3            | HOCpOZdR dmIcq70Qj,LeP                   | 10-191-404-9083 | ng to the furiously final foxes; always fi
+   9821.96 | Supplier#000023911        | KENYA                     |   1723910 | Manufacturer#5            | h51RgkfampUYUqaPlFHvr85z9LV orQ4Y6jdu    | 24-185-205-4445 | s. bold, regular deposits according to the requests sleep carefully special theod
+   9821.86 | Supplier#000058434        | MOROCCO                   |    758433 | Manufacturer#2            | 7WEm3zGtrNclkfa1k6 X bNQ                 | 25-181-336-2375 |  silent foxes. carefully special packages detect
+   9821.09 | Supplier#000062200        | MOROCCO                   |    887175 | Manufacturer#1            | N8NgBoatu1                               | 25-627-350-8324 | ymptotes across the idle, express requests haggle special accounts. furiously unusual
+   9810.37 | Supplier#000001211        | MOROCCO                   |    826186 | Manufacturer#1            | g lldwVuium jP79qGZT6ztUjTuCZmZKrNlcHglK | 25-752-441-6583 | ong the idly even packages. furiously special acco
+   9809.45 | Supplier#000083608        | MOROCCO                   |    383607 | Manufacturer#2            | xBeRdWUwPrrC7IWFq1G5DgW0A11a             | 25-456-342-7222 |  across the pinto beans. furiously bold deposits across the slyly bold sentiments nag blit
+    9808.1 | Supplier#000094922        | MOROCCO                   |    694921 | Manufacturer#2            | MR uUcICwcoY7                            | 25-766-845-9012 | ilent, regular instructions doubt carefully fluffily ironic ac
+    9808.1 | Supplier#000094922        | MOROCCO                   |   1894921 | Manufacturer#1            | MR uUcICwcoY7                            | 25-766-845-9012 | ilent, regular instructions doubt carefully fluffily ironic ac
+   9803.13 | Supplier#000034855        | MOZAMBIQUE                |     59854 | Manufacturer#4            | FEu0YuedM8GOe8Nt                         | 26-610-128-1275 | nic deposits breach deposits. carefully ironic dolphins are carefully final packages. special pack
+   9798.64 | Supplier#000058299        | ETHIOPIA                  |    758298 | Manufacturer#3            | OPWvhHt npgWH                            | 15-648-110-1366 | . carefully express accounts haggle thin, pending accounts. ironic, special requests wake quickly
+   9797.06 | Supplier#000054512        | ALGERIA                   |    579496 | Manufacturer#5            |  zIBwy2l5mKoaohHWxfwGu0oe65OA2           | 10-669-483-8514 | endencies. slyly regular requests haggle furiously regular, regular packages. even, final pinto be
+   9797.06 | Supplier#000054512        | ALGERIA                   |   1079481 | Manufacturer#5            |  zIBwy2l5mKoaohHWxfwGu0oe65OA2           | 10-669-483-8514 | endencies. slyly regular requests haggle furiously regular, regular packages. even, final pinto be
+   9795.98 | Supplier#000099906        | ALGERIA                   |   1874887 | Manufacturer#5            | 50QFSFcA4gh7t4z16uUBPUVdZK,xCUg,AgX      | 10-160-878-8131 | . quickly daring requests nag among the unusual epitaphs
+    9794.6 | Supplier#000057405        | ETHIOPIA                  |    382395 | Manufacturer#4            | e,in3QQjWqgArndAxfc4zYR0GZ3qxJXF737rV    | 15-776-316-2111 | g to the express requests. quickly
+   9794.04 | Supplier#000059435        | MOROCCO                   |     84434 | Manufacturer#5            | ZtbRhOyCYFDgwrr3FFPjdv6JG1yEEn           | 25-872-898-1866 |  furiously. ironic accounts are slyly furiously ir
+   9793.52 | Supplier#000025933        | KENYA                     |    700925 | Manufacturer#3            | iQHP5DiqEi2BdSTi5XiGcccwV3o              | 24-438-592-2557 |  regular deposits. unusual requests are furiously quickly express senti
+   9785.18 | Supplier#000081150        | ETHIOPIA                  |     31149 | Manufacturer#1            | XBaFhwSQ7opvZiOT0zoXqCTii5,NhtPNh HQ     | 15-642-446-9652 | blithely regular requests. fu
+   9785.18 | Supplier#000081150        | ETHIOPIA                  |   1631117 | Manufacturer#2            | XBaFhwSQ7opvZiOT0zoXqCTii5,NhtPNh HQ     | 15-642-446-9652 | blithely regular requests. fu
+   9785.18 | Supplier#000081150        | ETHIOPIA                  |   1681149 | Manufacturer#3            | XBaFhwSQ7opvZiOT0zoXqCTii5,NhtPNh HQ     | 15-642-446-9652 | blithely regular requests. fu
+   9783.01 | Supplier#000025750        | MOZAMBIQUE                |   1475721 | Manufacturer#4            | ,Ir9YzQ8eT5CzN8vtCA                      | 26-638-200-1642 | deas? quickly regular packages promise furiously blithely ironic packages. slyly fi
+(100 rows)
+
+COMMIT;
+COMMIT
